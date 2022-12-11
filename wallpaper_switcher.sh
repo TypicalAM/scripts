@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Author : Copyright (c) 2022 Adam Piaseczny
 # Github Profile : https://github.com/TypicalAM

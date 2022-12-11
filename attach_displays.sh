@@ -6,10 +6,10 @@
 # A script intended to make switching between laptop and external displays easier
 # Check your internal output value with xrandr | grep " connected" | cut -f1 -d " "
 
-INTERNAL_OUTPUT="DP-2"
+INTERNAL_OUTPUT="eDP"
 ROFI_COMMAND="rofi -dmenu -i -p Output -theme ~/.config/rofi/default_no_icons.rasi"
-CHOICES="Laptop\nDual\nExternal\nClone"                                                                                                                                                                                                                        
-POSSIBLE_DISPLAYS=("VGA-1" "DVI-1" "HDMI-0" "HDMI-1" "HDMI-2" "HDMI-3")
+CHOICES="Laptop\nDual\nExternal\nClone"
+POSSIBLE_DISPLAYS=("VGA-1" "DVI-1" "HDMI-0" "HDMI-1" "HDMI-2" "HDMI-3" "HDMI-1-0")
 
 ensure_available() {
 	local program_path="$1"
@@ -27,7 +27,7 @@ run_xrandr() {
  		External) xrandr --output $INTERNAL_OUTPUT --off --output "$external_output" --auto --primary ;;
     Laptop) xrandr --output $INTERNAL_OUTPUT --auto --primary --output "$external_output" --off ;;
     Clone) xrandr --output $INTERNAL_OUTPUT --auto --output "$external_output" --auto --same-as $INTERNAL_OUTPUT ;;
-    Dual) xrandr --output $INTERNAL_OUTPUT --auto --output "$external_output" --auto --right-of $INTERNAL_OUTPUT --primary ;;
+    Dual) xrandr --output $INTERNAL_OUTPUT --auto --output "$external_output" --auto --above $INTERNAL_OUTPUT --primary ;;
 	esac
 }
 
