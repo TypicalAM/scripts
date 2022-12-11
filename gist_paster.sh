@@ -19,7 +19,7 @@ paste_gist() {
 	local chosen_name=$(echo -e "$EXAMPLE_NAMES" | $ROFI_COMMAND)
 	[[ "$chosen_name" == "" ]] && exit 0
 	xclip -selection clipboard -o > "/tmp/${chosen_name}"
-	local output=$(gist "/tmp/${chosen_name}")
+	local output=$(gist --private --description "Created by gist-paster" "/tmp/${chosen_name}")
 	notify-send "Gist has been saved" "It is available at $output" -i $ICON
 	echo "$output" | xclip -selection clipboard
 }
