@@ -51,7 +51,9 @@ check_features() {
 	[[ -f "/bin/sddm" ]] && [[ -w "$SDDM_BACKGROUND" ]] && run_sddm=true
 
 	[[ -f "/usr/local/bin/pywalfox" ]] && run_pywalfox=true
+	[[ -f "$USER_HOME/.local/bin/pywalfox" ]] && run_pywalfox=true
 	[[ -f "/usr/local/bin/betterlockscreen" ]] && run_betterlockscreen=true
+	[[ -f "$USER_HOME/.local/bin/betterlockscreen" ]] && run_betterlockscreen=true
 }
 
 get_colors() {
