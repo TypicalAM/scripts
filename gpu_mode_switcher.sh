@@ -3,12 +3,11 @@
 # Author : Copyright (c) 2022 Adam Piaseczny
 # Github Profile : https://github.com/TypicalAM
 
-# A bash script to convert videos from obs for sending them to facebook
-# made because of the buggy nature of sending mkv files and the 25 MB
-# file limit
+# A bash script to set the GPU mode using supergfxctl
 
 ICON="/usr/share/icons/McMojave-circle-purple/status/32/system-switch-user.svg"
 MODES="Integrated\nHybrid\nDedicated\nCompute\nVfio"
+ROFI_THEME="~/.config/rofi/default_no_icons.rasi"
 
 echof() {
 	local colorReset="\033[0m"
@@ -30,12 +29,12 @@ ensure_available() {
 }
 
 main(){
-	ROFI_COMMAND="rofi -dmenu -i -p $(supergfxctl -g) -theme ~/.config/rofi/default_no_icons.rasi"
+	ROFI_COMMAND="rofi -dmenu -i -p $(supergfxctl -g) -theme $ROFI_THEME"
 	CHOSEN_MODE=$(echo -e "$MODES"|$ROFI_COMMAND)
 	[[ "$CHOSEN_MODE" == "" ]] && echof error "Operation cancelled" && exit 1
-	[[ "$CHOSEN_MODE" == "Vfio" ]] && [[ "$(supergfxctl -g)" != "Integrataed" ]] && notify-send "Failed to switch the mode" "Can't switch from non-integrated to vfio" && exit 1
+	[[ "$CHOSEN_MODE" == "Vfio" ]] && [[ "$(supergfxctl -g)" != "Integrated" ]] && notify-send "Failed to switch the mode" "Can't switch from non-integrated to vfio" && exit 1
 	echof info "Chosen mode: $CHOSEN_MODE"
-	if /bin/supergfxctl -m $CHOSEN_MODE > /dev/null; then
+	if supergfxctl -m $CHOSEN_MODE > /dev/null; then
 		echof info "Mode switched to $CHOSEN_MODE, you now have to log off"
 		notify-send "GPU mode changed to $CHOSEN_MODE" "Log out to see the changes" -i $ICON
 	else
