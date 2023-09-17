@@ -16,7 +16,7 @@ main() {
 	local hex_value=$(maim -s |convert - -scale 1x1\! -format '%[fx:int(255*r+.5)],%[fx:int(255*g+.5)],%[fx:int(255*b+.5)]' info:- | sed 's/,/\n/g' | xargs -L 1 printf "%x")
 	convert -size 48x48 xc:#$hex_value $file
 	notify-send "This is your color!" "#$hex_value copied to clipboard" -i $file
-	echo "#$hex_value" |xclip -selection clipboard
+	echo "#$hex_value" | tr "\n" " " | xclip -selection clipboard
 }
 
 ensure_available "/bin/maim"
