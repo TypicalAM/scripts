@@ -1,24 +1,21 @@
-#!/bin/bash
-
-# Author : Copyright (c) 2022 Adam Piaseczny
-# Github Profile : https://github.com/TypicalAM
-
-# A script to detach and reattach drives for a kvm/qemu virtual machine 
+#!/usr/bin/env bash
+#
+# A script to detach and reattach drives for a kvm/qemu virtual machine
 
 TARGET_DIR="/mnt/temp"
 
 echof() {
-	local colorReset="\033[0m"
 	local prefix="$1"
 	local message="$2"
-
 	case "$prefix" in
-		header) msgpfx="[\e[1;95mG\e[m]" color="";;
-		info) msgpfx="[\e[1;92m*\e[m]" color="";;
-		error) msgpfx="[\e[1;91m!\e[m]" color="\033[0;31m";;
-		*) msgpfx="" color="";;
+	header) msgpfx="[\e[1;95m\e[m]" ;;
+	info) msgpfx="[\e[1;97m=\e[m]" ;;
+	act) msgpfx="[\e[1;92m*\e[m]" ;;
+	ok) msgpfx="[\e[1;93m+\e[m]" ;;
+	error) msgpfx="[\e[1;91m!\e[m]" ;;
+	*) msgpfx="" ;;
 	esac
-	echo -e "$msgpfx $color$message $colorReset"
+	echo -e "$msgpfx $message"
 }
 
 check_if_sudo() {
@@ -26,10 +23,18 @@ check_if_sudo() {
 }
 
 ensure_available() {
-	[[ ! -f "$1" ]] && echof error "$1 isn't available!" >&2 && exit 1
+	command -v "${1}" >/dev/null 2>&1 || {
+		echof error "${1} isn't available!" >&2
+		exit 1
+	}
 }
 
-parse_cmd() {
+check_if_available() {
+	echof info "Checking if the target directory is not empty"
+	[[ "$(ls -A $TARGET_DIR)" ]] && echof error "The target directory ${TARGET_DIR} is not empty!" >&2 && exit 1
+}
+
+main() {
 	[[ "$1" == "" ]] || [[ "$2" == "" ]] && echof error "Not enough arguments given!" >&2 && exit 1
 
 	local action="$1"
@@ -43,39 +48,24 @@ parse_cmd() {
 	fi
 
 	if [[ "$action" == "connect" ]]; then
-		run_connect=true
+		check_if_available
+		echof info "Mounting ${mount_source} on ${TARGET_DIR}"
+		modprobe nbd max_part=8
+		qemu-nbd --connect=/dev/nbd0 "${mount_source}"
+		mount "/dev/nbd0p${partition_num}" "${TARGET_DIR}"
+		echof info "Successfully mounted"
 	elif [[ "$action" == "disconnect" ]]; then
-		run_disconnect=true
+		echof info "Unmounting ${mount_source} from ${TARGET_DIR}"
+		umount "${TARGET_DIR}"
+		qemu-nbd --disconnect /dev/nbd0 >>/dev/null
+		rmmod nbd
+		echof info "Successfully unmounted"
 	else
 		echof error "Unsupported action" >&2 && exit 1
 	fi
 }
 
-check_if_available() {
-	echof info "Checking if the target directory is not empty"
-	[[ "$(ls -A $TARGET_DIR)" ]] && echof error "The target directory ${TARGET_DIR} is not empty!" >&2 && exit 1
-}
-
-connect() {
-	check_if_available
-	echof info "Mounting ${mount_source} on ${TARGET_DIR}"
-	modprobe nbd max_part=8
-	qemu-nbd --connect=/dev/nbd0 "${mount_source}"
-	mount "/dev/nbd0p${partition_num}" "${TARGET_DIR}"
-	echof info "Successfully mounted"
-}
-
-disconnect() {
-	echof info "Unmounting ${mount_source} from ${TARGET_DIR}"
-	umount "${TARGET_DIR}"
-	qemu-nbd --disconnect /dev/nbd0 >> /dev/null
-	rmmod nbd
-	echof info "Successfully unmounted"
-}
-
 check_if_sudo
-ensure_available "/bin/qemu-x86_64"
-parse_cmd "$1" "$2"
+ensure_available "qemu-x86_64"
 
-[[ $run_connect ]] && connect
-[[ $run_disconnect ]] && disconnect
+main "$*"
