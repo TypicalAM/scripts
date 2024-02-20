@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# This script allows for pasting the clipboard contents to a github gist
-# and replacing the clipboard contents with the resulting URL
+# Pastes the clipboard contents to a github gist and replaces the
+# clipboard contents with the resulting URL
 
 ROFI_COMMAND="rofi -dmenu -i -p Filename -theme ~/.config/rofi/default_no_icons_small.rasi"
 ICON="/usr/share/icons/McMojave-circle-purple/status/32/dialog-information.svg"

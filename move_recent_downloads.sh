@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #
-# Move the most recent downloaded file into the current working directory
-# or, if specified - to another directory
+# Moves the most recent downloaded file into cwd or other dir
 
 DOWNLOADS_DIR="$HOME/downloads"
 

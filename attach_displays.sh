@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A script intended to make switching between laptop and external displays easier
+# Makes switching witching between laptop and external displays easier
 # Check your internal output value with xrandr | grep " connected" | cut -f1 -d " "
 
 INTERNAL_OUTPUT="eDP"

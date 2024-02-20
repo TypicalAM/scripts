@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# A script to take the average pixel value of a rectangular area
-# and copy the hex code of the color to the clipboard
+# Takes the average pixel value of a rectangular area and copies
+# the hex code of the color to the clipboard
 
 ensure_available() {
 	command -v "${1}" >/dev/null 2>&1 || {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A script to detach and reattach drives for a kvm/qemu virtual machine
+# Manages drives for a kvm/qemu virtual machine. Requires the nbd kernel module
 
 TARGET_DIR="/mnt/temp"
 

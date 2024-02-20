@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A script to rotate the sceren 180°
+# Rotates the sceren 180° (yes)
 
 ensure_available() {
 	command -v "${1}" >/dev/null 2>&1 || {

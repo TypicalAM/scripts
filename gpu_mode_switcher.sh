@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# A bash script to set the GPU mode using supergfxctl
+# Sets the GPU mode using supergfxctl
 
 ICON="/usr/share/icons/McMojave-circle-purple/status/32/system-switch-user.svg"
 MODES="Integrated\nHybrid\nDedicated\nCompute\nVfio"
-ROFI_THEME="~/.config/rofi/default_no_icons.rasi"
+ROFI_THEME="$HOME/.config/rofi/default_no_icons.rasi"
 
 echof() {
 	local colorReset="\033[0m"
@@ -33,7 +33,7 @@ main() {
 	[[ "$chosen_mode" == "" ]] && echof error "Operation cancelled" && exit 1
 	[[ "$chosen_mode" == "Vfio" ]] && [[ "$(supergfxctl -g)" != "Integrated" ]] && notify-send "Failed to switch the mode" "Can't switch from non-integrated to vfio" && exit 1
 	echof info "Chosen mode: $chosen_mode"
-	if supergfxctl -m $chosen_mode >/dev/null; then
+	if supergfxctl -m "$chosen_mode" >/dev/null; then
 		echof info "Mode switched to $chosen_mode, you now have to log off"
 		notify-send "GPU mode changed to $chosen_mode" "Log out to see the changes" -i $ICON
 	else

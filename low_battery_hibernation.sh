@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 #
-# A small script to hibernate the device if the battery is below a certiain threshhold
-# It is made for use in crontab, with an example rule being '* * * * * /home/test/script/battery.sh'
+# Hibernates the device if the battery is below a certiain threshhold, for use in cronjobs
 
 ensure_available() {
 	command -v "${1}" >/dev/null 2>&1 || {

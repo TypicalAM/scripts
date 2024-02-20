@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A script to switch the CPU profiles via the tuned switcher
+# Switches the CPU profiles via tuned switcher
 
 ROFI_COMMAND="rofi -dmenu -i -p Power -theme ~/.config/rofi/default_no_icons.rasi"
 ICON="/usr/share/icons/McMojave-circle-purple/status/32/system-switch-user.svg"

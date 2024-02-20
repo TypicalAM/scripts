@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A bash script to open the nvim todo list in the most recent kitty window
+# Opens the nvim todo list in the most recent kitty window
 
 ensure_available() {
 	command -v "${1}" >/dev/null 2>&1 || {

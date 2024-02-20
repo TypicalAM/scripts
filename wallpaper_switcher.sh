@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A script to change the theme based on the chosen wallpaper
+# Changes the wallpaper and makes theme colors based on it
 
 echof() {
 	local colorReset="\033[0m"

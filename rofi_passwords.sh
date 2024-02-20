@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 #
-# A script to make password management easier - with pass and rofi
-# we can print out all the available passwords in the vault and make the user
-# choose one of them in the rofi menu - then they can get the password right to
-# their clipboard!
+# Makes password management easier - print out all the available passwords from pass
+# and select them from rofi
 
 ROFI_COMMAND="rofi -dmenu -i -p Passwords -theme $HOME/.config/rofi/default_no_icons.rasi"
 

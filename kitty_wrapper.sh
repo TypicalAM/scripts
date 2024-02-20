@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# A bash script to wrap the existing `kitty` terminal emulator and allow for remote control of every kitty window
+# Wraps the existing `kitty` terminal emulator and allows for remote control of every kitty window
 
 ensure_available() {
 	command -v "${1}" >/dev/null 2>&1 || {

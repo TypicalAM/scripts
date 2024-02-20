@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 #
-# A bash script to convert videos from obs for sending them to facebook
-# made because of the buggy nature of sending mkv files and the 25 MB
-# file limit
+# Converts videos from obs for sending them to facebook made because 
+# of the buggy nature of sending mkv files and the 25 MB file limit
 
 INPUT_DIR="$HOME/videos"
 OUTPUT_DIR="$HOME/videos/converted"

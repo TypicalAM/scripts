@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Wrap rofi in an nvidia_offload environment
+# Wraps rofi to launch a dedicated GPU app
 
 ROFI_COMMAND="rofi -no-lazy-grab -show drun -modi drun -theme ~/.config/rofi/default.rasi"
 
