@@ -27,7 +27,7 @@ main() {
 	fi
 	local filename=$(ls -t1 "$DOWNLOADS_DIR" | head -n 1)
 	echof info "Newest filename: $filename"
-	if [[ -f "$DOWNLOADS_DIR/$filename" ]]; then
+	if [[ ! -f "$DOWNLOADS_DIR/$filename" ]]; then
 		echof error "There is no newest file, damn" >&2
 		exit 1
 	else
