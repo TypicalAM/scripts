@@ -23,13 +23,13 @@ main() {
 
 	if [ -n "$highest_filename" ]; then
 		echo "Listening on: $((highest_number + 1))"
-		kitty -o allow_remote_control=yes --listen-on unix:/tmp/kitty_dev$((highest_number + 1))
+		kitty -o allow_remote_control=yes --listen-on unix:/tmp/kitty_dev$((highest_number + 1)) -- "$@"
 	else
 		echo "No matching files found. Listening on: 1"
-		kitty -o allow_remote_control=yes --listen-on unix:/tmp/kitty_dev1
+		kitty -o allow_remote_control=yes --listen-on unix:/tmp/kitty_dev1 -- "$@"
 	fi
 }
 
 ensure_available "kitty"
 
-main
+main $*
