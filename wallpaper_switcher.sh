@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Changes the wallpaper and makes theme colors based on it
+# Changes the wallpaper and makes theme colors based on the chosen wallpaper
 
 echof() {
 	local colorReset="\033[0m"
@@ -155,7 +155,7 @@ change_theme() {
 	[[ $run_polybar ]] && change_polybar
 	[[ $run_rofi ]] && change_rofi
 	[[ $run_pywalfox ]] && change_firefox
-	[[ $run_kitty ]] && change_kitty
+	# [[ $run_kitty ]] && change_kitty
 	[[ $run_zathura ]] && change_zathura
 	[[ $run_dunst ]] && change_dunst
 	[[ $run_betterlockscreen ]] && change_lockscreen "$1"
